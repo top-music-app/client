@@ -26,13 +26,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#">Worldwide <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="#">Country</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
+                    <a class="nav-link" href="#">Favorite</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#">Disabled</a>
@@ -45,15 +45,23 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
 
+        <button type="button" class="btn btn-outline-success my-2 my-sm-0" id="login-btn" data-toggle="modal" data-target="#login-modal">
+                Login
+        </button>
+
         <button type="button" class="btn btn-outline-success my-2 my-sm-0" id="register-btn" data-toggle="modal" data-target="#register-modal">
                 Register
+        </button>
+
+        <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="signOut()" id="signout-btn">
+                Sign Out
         </button>
     </nav>
 
     <!-- Button trigger modal -->
     
 
-    <!-- Modal -->
+    <!-- Register Modal -->
     <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -64,41 +72,69 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    
+                    <form id="register-form">
 
-
-                    <form method="POST" action="http://localhost:3000/register" id="register-form">
-                        REGISTER
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
-                                name="email">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                placeholder="Enter email" name="email">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                                else.</small>
                         </div>
 
                         <div class="form-group">
                             <label for="formGroupExampleInput">Name</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input" name="name">
+                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input"
+                                name="name">
                         </div>
 
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                                name="password">
                         </div>
 
                         <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="register()">Submit</button>
                     </form>
-
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <!-- login Modal -->
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                placeholder="Enter email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                                name="password">
+                        </div>
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="login()">Login</button>
+                    </form>
+                    <div class="g-signin2" data-onsuccess="onSignIn" data-dismiss="modal"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
 
@@ -111,49 +147,16 @@
 
                 <div class="col-sm">
                 
-                        <form>
-                            REGISTER
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
-                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="formGroupExampleInput">Name</label>
-                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input" name="name">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
                         
-                        <form method="POST" action="http://localhost:3000/login">
-                            LOGIN
-                            <div class="form-group">
-                              <label for="exampleInputEmail1">Email address</label>
-                              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
-                              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                            </div>
-                            <div class="form-group">
-                              <label for="exampleInputPassword1">Password</label>
-                              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Log In</button>
-                        </form>
+                    
 
 
 
-
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    
                 </div>
 
                 <div class="col-sm">
-                    <a href="#" onclick="signOut();">Sign out</a>
+                    
                 One of three columns
                 </div>
             </div>
@@ -179,6 +182,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script>
+
+        $('#signout-btn').hide();
+        
+        //google sign in
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
             console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -195,21 +202,29 @@
             }).done((result) => {
                 
                 localStorage.setItem('token', result.jwttoken);
+                $('#register-btn').hide();
+                $('#login-btn').hide();
+                $('#signout-btn').toggle();
             }).fail((err) => {
                 console.log(err);
             });
 
 
         }
-
+        
+        //google sign out
         function signOut() {
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 localStorage.clear()
-                alert('User signed out.');
+                alert('User has been signed out.');
+                $('#register-btn').show();
+                $('#login-btn').show();
+                $('#signout-btn').toggle();
             });
         }
 
+        //register
         function register() {
 
             $.ajax({
@@ -223,12 +238,34 @@
             }).done((result) => {
                 localStorage.setItem('token', result.jwttoken);
                 $('#register-btn').hide();
+                $('#login-btn').hide();
+                $('#signout-btn').toggle();
             }).fail((err) => {
                 alert(err);
             });
 
+        }
+        
 
-            /* method="POST" action="http://localhost:3000/register" */
+        //login
+        function  login() {
+
+            $.ajax({
+                method: 'POST',
+                url: 'http://localhost:3000/login',
+                data: {
+                    email: $('#login-form input[name=email]').val(),
+                    password: $('#login-form input[name=password]').val()
+                }
+            }).done((result) => {
+                localStorage.setItem('token', result.jwttoken);
+                $('#register-btn').hide();
+                $('#login-btn').hide();
+                $('#signout-btn').toggle();
+            }).fail((err) => {
+                console.log(err);
+            });
+
         }
 
 
