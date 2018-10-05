@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Top-Music By Country</title>
+  </head>
+  <body>
+      <nav class="navbar navbar-dark bg-dark">
+          <a class="navbar-brand" href="#">
+            <img src="" width="30" height="30" class="d-inline-block align-top" alt="">
+            Top-Music
+          </a>
+        </nav>
+
+    <div class="container-fluid">
+        <div class="row" style="min-height:800px;">
+          <div class="col-2" style="border: 1px solid black;">
+            <h5>Kamu berada di:</h5>
+            <div id="location"></div>
+            <div id="searchArea">
+              <input id="countrySearch" placeholder="Type an Country" /><br><br>
+              <button onclick="searchCountry('')">Search</button>
+            </div>
+          </div>
+
+          <div class="col-10">
+            <div id="titleChart"></div>
+            <div id="listChart"></div>
+          </div>
+        </div>
+    </div>
+    
+
+
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    
+
+
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://tracking.musixmatch.com/t1.0/AMa6hJCIEzn1v8RuOP"></script>
+    <script>
+
+      $(document).ready(function(){
+          $.ajax({
+          method: 'GET',
+          url: `http://ip-api.com/json`,
+          dataType: 'json'
+        })
+        .done(function(data){
+            $('#location').append(`
+            <div style="border:1px;">
+              <p>
+                City: ${data.city} <br>
+                Country: ${data.country}
+              </p>
+            </div>
+            `)
+            $('#titleChart').empty().append(`
+              <h3>Chart on Your Country</h3>
+              <h3>${data.country}</h3>
+            `)
+            let code = data.countryCode
+            getList(code.toLowerCase())
+        })
+        .fail(function(err){
+            console.log(err);
+      })
+    })
+
+    function getList(code){      
+      $.ajax({
+        type: "GET",
+        data: {
+            apikey:"7b773734cdd9e210fa7974232e94f755",
+            page_size: "10",
+            country: code,
+            chart_name: "top",
+            f_has_lyrics: "1",
+            format:"jsonp"        },
+        url: "https://api.musixmatch.com/ws/1.1/chart.tracks.get",
+        dataType: "jsonp",
+        contentType: 'application/json'})
+        .done(function(data) {
+          let list = data.message.body.track_list
+          $('#listChart').empty()
+          for(let i = 0; i < list.length; i++){
+            $('#listChart').append(`
+                  <div data-toggle="modal" data-target="#exampleModalLong" onclick="getLyric('${list[i].track.track_id}', '${list[i].track.track_name}', '${list[i].track.artist_name}')">
+                    <table>
+                      <tr>
+                        <td>${i+1}.</td>
+                        <td>
+                          Artist Name : ${list[i].track.artist_name}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>Title: ${list[i].track.track_name}</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>Album: ${list[i].track.album_name}</td>
+                      </tr>
+                    </table>
+                  </div>
+              `)
+          }
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+          console.log('eror');
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        })
+      
+      }
+
+      function getLyric(track_id, title, artist){
+        $.ajax({
+        type: "GET",
+        data: {
+            apikey:"7b773734cdd9e210fa7974232e94f755",
+            track_id: track_id,
+            format:"jsonp",
+            callback:"jsonp_callback"
+        },
+        url: "https://api.musixmatch.com/ws/1.1/track.lyrics.get",
+        dataType: "jsonp",
+        jsonpCallback: 'jsonp_callback',
+        contentType: 'application/json'})
+        .done(function(data) {
+          console.log(data.message.body.lyrics); 
+          $('.modal-title').empty().append(`${title} By. ${artist}`)
+          $('.modal-body').empty().append(`
+          ${data.message.body.lyrics.lyrics_body}
+          `)          
+          
+        })
+        .fail(function(err){
+          console.log(err);
+          
+        })
+      }
+
+      function searchCountry(){
+        let key = $('#countrySearch').val()
+        $.ajax({
+          type: 'GET',
+          url: `https://restcountries.eu/rest/v2/name/${key}`,
+          dataType: 'json'
+        })
+        .done(function(data){
+          console.log(data);
+          $('#titleChart').empty().append(`
+            <h3>Chart on Country</h3>
+            <h3>${data[0].name}</h3>
+            `)
+          let code = data[0].alpha2Code
+          getList(code.toLowerCase())
+          
+        })
+        .fail(err => {
+          alert('Country not found')          
+          console.log(err);
+          
+        })
+        
+      }
+
+
+     
+
+
+    
+    </script>
+
+
+
+
+  </body>
+</html>

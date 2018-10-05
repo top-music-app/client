@@ -18,6 +18,5 @@
   },
   "homepage": "https://github.com/top-music-app/client#readme",
   "dependencies": {
-    "live-server": "^1.2.0"
   }
 }
