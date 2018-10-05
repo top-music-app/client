@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Top Music App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <meta name="google-signin-client_id" content="284099701133-vcv5d8quddobvm7dpkc54jo7618b2kr6.apps.googleusercontent.com">
+    <link rel="stylesheet" type="text/css" media='screen' href='index.css'>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link href="https://fonts.googleapis.com/css?family=Nunito|Oswald:700" rel="stylesheet">
+</head>
+<body>
+    <div id='bg-img' style="background-image: url(https://source.unsplash.com/1600x900/?music,light); background-size: 100%;"></div>
+    <div id='backdrop'></div>
+    <!-- NAVBAR -->
+    <div id='header'>
+        <nav class="navbar navbar-expand-lg navbar navbar-dark">
+            <div class="navbar-brand" >Top Music App</div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <div id='w-nav-link' class="nav-link" onclick="getWorldwidePage()">Worldwide</div>
+                    </li>
+                    <li class="nav-item">
+                        <div id='c-nav-link' class="nav-link" onclick="getCountryPage()">Country</div>
+                    </li>
+                    <li class="nav-item ifSignedIn">
+                        <div id='f-nav-link' class="nav-link" onclick="getFavoritePage()">Favorite</div>
+                    </li>
+                </ul>
+            </div>
+    
+            <button type="button" class="btn btn-outline-info my-2 my-sm-0 ifSignedOut" id="login-btn" data-toggle="modal" data-backdrop='false' data-target="#login-modal">
+                    Login
+            </button>
+    
+            <button type="button" class="btn btn-outline-info my-2 my-sm-0 ifSignedOut" id="register-btn" data-toggle="modal" data-backdrop='false' data-target="#register-modal">
+                    Register
+            </button>
+    
+            <button type="button" class="btn btn-outline-info my-2 my-sm-0 ifSignedIn" onclick="signOut()" id="signout-btn">
+                    Sign Out
+            </button>
+        </nav>
+    
+        <!-- Register Modal -->
+        <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="register-form">
+    
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                    placeholder="Enter email" name="email">
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                                    else.</small>
+                            </div>
+    
+                            <div class="form-group">
+                                <label for="formGroupExampleInput">Name</label>
+                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input"
+                                    name="name">
+                            </div>
+    
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                                    name="password">
+                            </div>
+    
+                            <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="register()">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+        <!-- login Modal -->
+        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+    
+                        <form id="login-form">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                    placeholder="Enter email" name="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                                    name="password">
+                            </div>
+                            <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="login()">Login</button>
+                        </form>
+                        <div class="g-signin2" data-onsuccess="onSignIn" data-dismiss="modal"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div id="sidebar">
+        <div id='sidebar-title' class="pb-4 border-bottom">
+            Top<br>Music<br>App
+        </div>
+        <div id='sidebar-menu'>
+            <div class="row mb-4" id='trackmenu' onclick="showTracks()">
+                <div class='col-1'></div>
+                <div class="col-9 menutext">Tracks</div>
+                <div class="col-2 text-center"><i class="fas fa-music" style="color:#9CC9E3; font-size: 2vw"></i></div>
+            </div>
+            <div class="row" id='artistmenu' onclick="showArtists()">
+                <div class='col-1'></div>
+                <div class="col-9 menutext">Artists</div>
+                <div class="col-2 text-center"><i class="fas fa-users" style="color:#9CC9E3; font-size: 2vw"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" >
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-1"></div>
+            <div class="col-8" id='content'>
+                <div id='content-row' class="row">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('document').ready(() => {
+            $.ajax({
+                url: 'http://localhost:3000/check',
+                headers: { access_token: localStorage.getItem('token') }
+            })
+            .done(data => {
+                if (data.isLogin) {
+                    listFavoriteTracks()
+                    listFavoriteArtists()
+                    $('.ifSignedIn').show()
+                    $('.ifSignedOut').hide()
+                } else {
+                    $('.ifSignedIn').hide()
+                    $('.ifSignedOut').show()
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                $('.ifSignedIn').hide()
+                $('.ifSignedOut').show()
+            })
+            
+            let openTab = localStorage.getItem('openTab')
+            if (openTab === 'favorite') {
+                getFavoritePage()
+            } else if (openTab === 'country') {
+                getCountryPage()
+            } else {
+                getWorldwidePage()
+            }
+        })
+        
+        function onSignIn(googleUser) {
+            var id_token = googleUser.getAuthResponse().id_token;
+            $.ajax({
+                method: 'POST',
+                url: `http://localhost:3000/signin/google`,
+                data: {token: id_token}
+            }).done((result) => {
+                localStorage.setItem('token', result.jwttoken);
+                listFavoriteTracks()
+                listFavoriteArtists()
+                $('.ifSignedIn').show()
+                $('.ifSignedOut').hide()
+            }).fail((err) => {
+                console.log(err);
+            });
+
+
+        }
+        
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                localStorage.clear()
+                alert('User has been signed out.');
+                $('.ifSignedIn').hide()
+                $('.ifSignedOut').show()
+            });
+        }
+
+        function register() {
+
+            $.ajax({
+                method: 'POST',
+                url: 'http://localhost:3000/register',
+                data: {
+                    email: $('#register-form input[name=email]').val(),
+                    name: $('#register-form input[name=name]').val(),
+                    password: $('#register-form input[name=password]').val()
+                }
+            }).done((result) => {
+                localStorage.setItem('token', result.jwttoken);
+            }).fail((err) => {
+                alert(err);
+            });
+
+        }
+
+        function login() {
+
+            $.ajax({
+                method: 'POST',
+                url: 'http://localhost:3000/login',
+                data: {
+                    email: $('#login-form input[name=email]').val(),
+                    password: $('#login-form input[name=password]').val()
+                }
+            }).done((result) => {
+                localStorage.setItem('token', result.jwttoken);
+                listFavoriteTracks()
+                listFavoriteArtists()
+                $('.ifSignedIn').show()
+                $('.ifSignedOut').hide()
+            }).fail((err) => {
+                console.log(err);
+            });
+        }
+
+        function getWorldwidePage () {
+            localStorage.setItem('openTab', 'worldwide')
+            listWorldwideTracks()
+            $('#w-nav-link').addClass('active')
+            $('#c-nav-link').removeClass('active')
+            $('#f-nav-link').removeClass('active')
+        }
+
+        function getCountryPage () {
+            localStorage.setItem('openTab', 'country')
+            listCountryTracks()
+            $('#w-nav-link').removeClass('active')
+            $('#c-nav-link').addClass('active')
+            $('#f-nav-link').removeClass('active')
+        }
+
+        function getFavoritePage () {
+            localStorage.setItem('openTab', 'favorite')
+            renderFavoriteTracks()
+            $('#w-nav-link').removeClass('active')
+            $('#c-nav-link').removeClass('active')
+            $('#f-nav-link').addClass('active')
+        }
+
+        function showTracks () {
+            if (localStorage.getItem('openTab') === 'favorite') {
+                renderFavoriteTracks()
+            } else if (localStorage.getItem('openTab') === 'worldwide') {
+                listWorldwideTracks()
+            } else {
+                listCountryTracks()
+            }
+        }
+
+        function showArtists () {
+            if (localStorage.getItem('openTab') === 'favorite') {
+                renderFavoriteArtists()
+            } else if (localStorage.getItem('openTab') === 'worldwide') {
+                listWorldwideArtists()
+            } else {
+                listCountryArtists()
+            }
+        }
+
+        function listWorldwideTracks () {
+            $.ajax({
+                method: 'GET',
+                url: `http://localhost:3000/worldwide/tracks`
+            })
+            .done(function(data) {
+                $('#content-row').text('')
+                data.track_list.forEach(datum => {
+                    $('#content-row').append(
+                        `<div class="col-3 blog-card spring-fever">
+                            <div class="title-content">
+                                <h3>${datum.track.track_name}</h3>
+                                <hr />
+                                <div class="intro">by ${datum.track.artist_name}</div>
+                            </div><!-- /.title-content -->
+                            <div class="card-info">
+                                From album:<br><br>${datum.track.album_name} 
+                            </div><!-- /.card-info -->
+                            <div class="utility-info">
+                                <ul class="utility-list">
+                                </ul>
+                            </div><!-- /.utility-info -->
+                            <!-- overlays -->
+                            <div class="gradient-overlay"></div>
+                            <div class="color-overlay"></div>
+                        </div><!-- /.blog-card -->
+                        <div class="col-1"></div>`
+                    )
+                })
+            })
+            .fail(function(err) {
+                console.log(err);
+            });
+        }
+
+        function listWorldwideArtists () {
+            $.ajax({
+                method: 'GET',
+                url: 'http://localhost:3000/worldwide/artists'
+            })
+            .done(function(data) {
+                $('#content-row').text('')
+                data.artist_list.forEach(datum => {
+                    $('#content-row').append(
+                        `<div class="col-3 blog-card spring-fever">
+                            <div class="title-content">
+                                <h3>${datum.artist.artist_name}</h3>
+                                <hr />
+                                <div class="intro">${datum.artist.primary_genres.music_genre_list[0].music_genre.music_genre_name_extended}</div>
+                            </div><!-- /.title-content -->
+                            <div class="card-info">
+                                Rating:<br><br><span>${datum.artist.artist_rating}</span>
+                            </div><!-- /.card-info -->
+                            <div class="utility-info">
+                                <ul class="utility-list">
+                                </ul>
+                            </div><!-- /.utility-info -->
+                            <!-- overlays -->
+                            <div class="gradient-overlay"></div>
+                            <div class="color-overlay"></div>
+                        </div><!-- /.blog-card -->
+                        <div class="col-1"></div>`
+                    )
+                })
+            })
+            .fail(function(err) {
+                console.log(err);
+            });
+        }
+
+        function listCountryTracks () {
+            $.ajax({
+                url: 'http://ip-api.com/json'
+            })
+            .then((result) => {
+                $.ajax({
+                    url: `http://localhost:3000/country/gettrack/${result.countryCode}`,
+                })
+                .done(data => {
+                    $('#content-row').text('')
+                    data.data.forEach(datum => {
+                        $('#content-row').append(
+                            `<div class="col-3 blog-card spring-fever">
+                                <div class="title-content">
+                                    <h3>${datum.track.track_name}</h3>
+                                    <hr />
+                                    <div class="intro">by ${datum.track.artist_name}</div>
+                                </div><!-- /.title-content -->
+                                <div class="card-info">
+                                    From album:<br><br>${datum.track.album_name} 
+                                </div><!-- /.card-info -->
+                                <div class="utility-info">
+                                    <ul class="utility-list">
+                                    </ul>
+                                </div><!-- /.utility-info -->
+                                <!-- overlays -->
+                                <div class="gradient-overlay"></div>
+                                <div class="color-overlay"></div>
+                            </div><!-- /.blog-card -->
+                            <div class="col-1"></div>`
+                        )
+                    })
+                })
+                .fail(err => {
+                    console.log(err)
+                })
+            }).catch((err) => {
+                console.log(err)  
+            });
+        }
+
+        function listCountryArtists () {
+            $.ajax({
+                url: 'http://ip-api.com/json'
+            })
+            .then((result) => {
+                $.ajax({
+                    url: `http://localhost:3000/country/getartist/${result.countryCode}`,
+                })
+                .done(data => {
+                    $('#content-row').text('')
+                    data.data.forEach(datum => {
+                        $('#content-row').append(
+                            `<div class="col-3 blog-card spring-fever">
+                                <div class="title-content">
+                                    <h3>${datum.artist.artist_name}</h3>
+                                    <hr />
+                                    <div class="intro">${datum.artist.primary_genres.music_genre_list[0].music_genre.music_genre_name_extended}</div>
+                                </div><!-- /.title-content -->
+                                <div class="card-info">
+                                    Rating:<br><br><span>${datum.artist.artist_rating}</span>
+                                </div><!-- /.card-info -->
+                                <div class="utility-info">
+                                    <ul class="utility-list">
+                                    </ul>
+                                </div><!-- /.utility-info -->
+                                <!-- overlays -->
+                                <div class="gradient-overlay"></div>
+                                <div class="color-overlay"></div>
+                            </div><!-- /.blog-card -->
+                            <div class="col-1"></div>`
+                        )
+                    })
+                })
+                .fail(err => {
+                    console.log(err)
+                })
+            }).catch((err) => {
+                console.log(err)  
+            });
+        }
+
+        function listFavoriteTracks () {
+            $.ajax({
+                url: 'http://localhost:3000/favorites/tracks',
+                headers: {access_token: localStorage.getItem('token')}
+            })
+            .done(data => {
+                if (data.track.indexOf(null) !== -1) {
+                    listFavoriteTracks()
+                } else {
+                    localStorage.setItem('favt', JSON.stringify(data.track))
+                }
+            })
+            .fail(err => {
+                console.log(err)
+            })
+        }
+
+        function listFavoriteArtists () {
+            $.ajax({
+                url: 'http://localhost:3000/favorites/artists',
+                headers: {access_token: localStorage.getItem('token')}
+            })
+            .done(data => {
+                if (data.artist.indexOf(null) !== -1) {
+                    listFavoriteArtists()
+                } else {
+                    localStorage.setItem('fava', JSON.stringify(data.artist))
+                }
+            })
+            .fail(err => {
+                console.log(err)
+            })
+        }
+
+        function renderFavoriteTracks () {
+            let tracks = JSON.parse(localStorage.getItem('favt'))
+            $('#content-row').text('')
+            tracks.forEach(track => {
+                $('#content-row').append(
+                    `<div class="col-3 blog-card spring-fever">
+                        <div class="title-content">
+                            <h3>${track.track_name}</h3>
+                            <hr />
+                            <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
+                        </div><!-- /.title-content -->
+                        <div class="card-info">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim. 
+                        </div><!-- /.card-info -->
+                        <div class="utility-info">
+                            <ul class="utility-list">
+                            </ul>
+                        </div><!-- /.utility-info -->
+                        <!-- overlays -->
+                        <div class="gradient-overlay"></div>
+                        <div class="color-overlay"></div>
+                    </div><!-- /.blog-card -->
+                    <div class="col-1"></div>`
+                )
+            })
+        }
+
+        function renderFavoriteArtists () {
+            let artists = JSON.parse(localStorage.getItem('fava'))
+            $('#content-row').text('')
+            artists.forEach(artist => {
+                $('#content-row').append(
+                    `<div class="col-3 blog-card spring-fever">
+                        <div class="title-content">
+                            <h3>${artist.artist_name}</h3>
+                            <hr />
+                            <div class="intro">${artist.primary_genres.music_genre_list[0].music_genre.music_genre_name_extended}</div>
+                        </div><!-- /.title-content -->
+                        <div class="card-info">
+                            Rating:<br><br><span>${artist.artist_rating}</span>
+                        </div><!-- /.card-info -->
+                        <div class="utility-info">
+                            <ul class="utility-list">
+                            </ul>
+                        </div><!-- /.utility-info -->
+                        <!-- overlays -->
+                        <div class="gradient-overlay"></div>
+                        <div class="color-overlay"></div>
+                    </div><!-- /.blog-card -->
+                    <div class="col-1"></div>`
+                )
+            })
+        }
+    </script>
+
+</body>
