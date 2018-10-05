@@ -45,27 +45,7 @@
                     url: 'http://localhost:3000/worldwide/artists'
                 })
                     .done(function(result) {
-                        let artist_list = result.artist_list;
-                        let html = '';
-                        let genre = '';
-                        for (let i = 0; i < artist_list.length; i++) {
-                            for (let j = 0; j < artist_list[i].artist.primary_genres.music_genre_list.length; j++) {
-                                let artist_genre = artist_list[i].artist.primary_genres.music_genre_list[j];
-                                genre += `<p style="margin-bottom: 5px">${artist_genre.music_genre.music_genre_name}</p>`
-                            }
-                            html += `<center>
-                                        <div content='track'>
-                                            <h3>${artist_list[i].artist.artist_name}</h3>
-                                            <p style="margin-bottom: 8px; margin-top: 5px; color: lightseagreen"><strong>Genre List</strong></p>
-                                            ${genre}
-                                            <br>
-                                            <a href="${artist_list[i].artist.artist_share_url}" target="blank">Artist Page</a>
-                                        </div>
-                                        <hr />
-                                    </center>`
-                            genre = '';
-                        }
-                        $('#tracks').html(html);
+                        
                     })
                     .fail(function(err) {
                         console.log(err);

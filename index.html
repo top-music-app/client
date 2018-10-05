@@ -300,11 +300,73 @@
         }
 
         function listWorldwideTracks () {
-
+            $.ajax({
+                method: 'GET',
+                url: `http://localhost:3000/worldwide/tracks`
+            })
+            .done(function(data) {
+                $('#content-row').text('')
+                data.track_list.forEach(datum => {
+                    $('#content-row').append(
+                        `<div class="col-3 blog-card spring-fever">
+                            <div class="title-content">
+                                <h3>${datum.track.track_name}</h3>
+                                <hr />
+                                <div class="intro">by ${datum.track.artist_name}</div>
+                            </div><!-- /.title-content -->
+                            <div class="card-info">
+                                From album:<br><br>${datum.track.album_name} 
+                            </div><!-- /.card-info -->
+                            <div class="utility-info">
+                                <ul class="utility-list">
+                                </ul>
+                            </div><!-- /.utility-info -->
+                            <!-- overlays -->
+                            <div class="gradient-overlay"></div>
+                            <div class="color-overlay"></div>
+                        </div><!-- /.blog-card -->
+                        <div class="col-1"></div>`
+                    )
+                })
+            })
+            .fail(function(err) {
+                console.log(err);
+            });
         }
 
         function listWorldwideArtists () {
-
+            $.ajax({
+                method: 'GET',
+                url: 'http://localhost:3000/worldwide/artists'
+            })
+            .done(function(data) {
+                $('#content-row').text('')
+                data.artist_list.forEach(datum => {
+                    $('#content-row').append(
+                        `<div class="col-3 blog-card spring-fever">
+                            <div class="title-content">
+                                <h3>${datum.artist.artist_name}</h3>
+                                <hr />
+                                <div class="intro">${datum.artist.primary_genres.music_genre_list[0].music_genre.music_genre_name_extended}</div>
+                            </div><!-- /.title-content -->
+                            <div class="card-info">
+                                Rating:<br><br><span>${datum.artist.artist_rating}</span>
+                            </div><!-- /.card-info -->
+                            <div class="utility-info">
+                                <ul class="utility-list">
+                                </ul>
+                            </div><!-- /.utility-info -->
+                            <!-- overlays -->
+                            <div class="gradient-overlay"></div>
+                            <div class="color-overlay"></div>
+                        </div><!-- /.blog-card -->
+                        <div class="col-1"></div>`
+                    )
+                })
+            })
+            .fail(function(err) {
+                console.log(err);
+            });
         }
 
         function listCountryTracks () {
@@ -357,7 +419,6 @@
                     url: `http://localhost:3000/country/getartist/${result.countryCode}`,
                 })
                 .done(data => {
-                    console.log(data.data)
                     $('#content-row').text('')
                     data.data.forEach(datum => {
                         $('#content-row').append(
