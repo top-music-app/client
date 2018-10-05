@@ -131,7 +131,8 @@ hr {
   margin: 0 15px 0 0;
   padding: 0 0 0 22px;
   display: inline-block;
-  color: #DCE3E7;
+  color: #D0BB57;
+  cursor: pointer;
   font-family: 'Roboto', sans-serif;
 }
 .utility-list li.comments {

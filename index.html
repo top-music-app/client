@@ -305,29 +305,34 @@
                 url: `http://localhost:3000/worldwide/tracks`
             })
             .done(function(data) {
-                $('#content-row').text('')
-                data.track_list.forEach(datum => {
-                    $('#content-row').append(
-                        `<div class="col-3 blog-card spring-fever">
-                            <div class="title-content">
-                                <h3>${datum.track.track_name}</h3>
-                                <hr />
-                                <div class="intro">by ${datum.track.artist_name}</div>
-                            </div><!-- /.title-content -->
-                            <div class="card-info">
-                                From album:<br><br>${datum.track.album_name} 
-                            </div><!-- /.card-info -->
-                            <div class="utility-info">
-                                <ul class="utility-list">
-                                </ul>
-                            </div><!-- /.utility-info -->
-                            <!-- overlays -->
-                            <div class="gradient-overlay"></div>
-                            <div class="color-overlay"></div>
-                        </div><!-- /.blog-card -->
-                        <div class="col-1"></div>`
-                    )
-                })
+                if (data.track_list !== undefined) {
+                    $('#content-row').text('')
+                    data.track_list.forEach(datum => {
+                        $('#content-row').append(
+                            `<div class="col-3 blog-card spring-fever">
+                                <div class="title-content">
+                                    <h3>${datum.track.track_name}</h3>
+                                    <hr />
+                                    <div class="intro">by ${datum.track.artist_name}</div>
+                                </div><!-- /.title-content -->
+                                <div class="card-info">
+                                    From album:<br><br>${datum.track.album_name} 
+                                </div><!-- /.card-info -->
+                                <div class="utility-info">
+                                    <ul class="utility-list">
+                                        <li class='ifSignedIn'> <i class="fas fa-heart" onclick='starTrack(${datum.track.track_id})'></i></li>
+                                    </ul>
+                                </div><!-- /.utility-info -->
+                                <!-- overlays -->
+                                <div class="gradient-overlay"></div>
+                                <div class="color-overlay"></div>
+                            </div><!-- /.blog-card -->
+                            <div class="col-1"></div>`
+                        )
+                    })
+                } else {
+                    listWorldwideTracks ()
+                }
             })
             .fail(function(err) {
                 console.log(err);
@@ -340,29 +345,34 @@
                 url: 'http://localhost:3000/worldwide/artists'
             })
             .done(function(data) {
-                $('#content-row').text('')
-                data.artist_list.forEach(datum => {
-                    $('#content-row').append(
-                        `<div class="col-3 blog-card spring-fever">
-                            <div class="title-content">
-                                <h3>${datum.artist.artist_name}</h3>
-                                <hr />
-                                <div class="intro">${datum.artist.primary_genres.music_genre_list[0].music_genre.music_genre_name_extended}</div>
-                            </div><!-- /.title-content -->
-                            <div class="card-info">
-                                Rating:<br><br><span>${datum.artist.artist_rating}</span>
-                            </div><!-- /.card-info -->
-                            <div class="utility-info">
-                                <ul class="utility-list">
-                                </ul>
-                            </div><!-- /.utility-info -->
-                            <!-- overlays -->
-                            <div class="gradient-overlay"></div>
-                            <div class="color-overlay"></div>
-                        </div><!-- /.blog-card -->
-                        <div class="col-1"></div>`
-                    )
-                })
+                if (data.artist_list !== undefined) {
+                    $('#content-row').text('')
+                    data.artist_list.forEach(datum => {
+                        $('#content-row').append(
+                            `<div class="col-3 blog-card spring-fever">
+                                <div class="title-content">
+                                    <h3>${datum.artist.artist_name}</h3>
+                                    <hr />
+                                    <div class="intro">${datum.artist.primary_genres.music_genre_list[0].music_genre.music_genre_name_extended}</div>
+                                </div><!-- /.title-content -->
+                                <div class="card-info">
+                                    Rating:<br><br><span>${datum.artist.artist_rating}</span>
+                                </div><!-- /.card-info -->
+                                <div class="utility-info">
+                                    <ul class="utility-list">
+                                        <li class='ifSignedIn'><i class="fas fa-heart" onclick='starArtist(${datum.artist.artist_id})'></i></li>
+                                    </ul>
+                                </div><!-- /.utility-info -->
+                                <!-- overlays -->
+                                <div class="gradient-overlay"></div>
+                                <div class="color-overlay"></div>
+                            </div><!-- /.blog-card -->
+                            <div class="col-1"></div>`
+                        )
+                    })
+                } else {
+                    listWorldwideArtists ()
+                }
             })
             .fail(function(err) {
                 console.log(err);
@@ -378,29 +388,34 @@
                     url: `http://localhost:3000/country/gettrack/${result.countryCode}`,
                 })
                 .done(data => {
-                    $('#content-row').text('')
-                    data.data.forEach(datum => {
-                        $('#content-row').append(
-                            `<div class="col-3 blog-card spring-fever">
-                                <div class="title-content">
-                                    <h3>${datum.track.track_name}</h3>
-                                    <hr />
-                                    <div class="intro">by ${datum.track.artist_name}</div>
-                                </div><!-- /.title-content -->
-                                <div class="card-info">
-                                    From album:<br><br>${datum.track.album_name} 
-                                </div><!-- /.card-info -->
-                                <div class="utility-info">
-                                    <ul class="utility-list">
-                                    </ul>
-                                </div><!-- /.utility-info -->
-                                <!-- overlays -->
-                                <div class="gradient-overlay"></div>
-                                <div class="color-overlay"></div>
-                            </div><!-- /.blog-card -->
-                            <div class="col-1"></div>`
-                        )
-                    })
+                    if (data.data !== undefined) {
+                        $('#content-row').text('')
+                        data.data.forEach(datum => {
+                            $('#content-row').append(
+                                `<div class="col-3 blog-card spring-fever">
+                                    <div class="title-content">
+                                        <h3>${datum.track.track_name}</h3>
+                                        <hr />
+                                        <div class="intro">by ${datum.track.artist_name}</div>
+                                    </div><!-- /.title-content -->
+                                    <div class="card-info">
+                                        From album:<br><br>${datum.track.album_name} 
+                                    </div><!-- /.card-info -->
+                                    <div class="utility-info">
+                                        <ul class="utility-list">
+                                            <li class='ifSignedIn'> <i class="fas fa-heart" onclick='starTrack(${datum.track.track_id})'></i></li>
+                                        </ul>
+                                    </div><!-- /.utility-info -->
+                                    <!-- overlays -->
+                                    <div class="gradient-overlay"></div>
+                                    <div class="color-overlay"></div>
+                                </div><!-- /.blog-card -->
+                                <div class="col-1"></div>`
+                            )
+                        })
+                    } else {
+                        listCountryTracks ()
+                    }
                 })
                 .fail(err => {
                     console.log(err)
@@ -419,29 +434,34 @@
                     url: `http://localhost:3000/country/getartist/${result.countryCode}`,
                 })
                 .done(data => {
-                    $('#content-row').text('')
-                    data.data.forEach(datum => {
-                        $('#content-row').append(
-                            `<div class="col-3 blog-card spring-fever">
-                                <div class="title-content">
-                                    <h3>${datum.artist.artist_name}</h3>
-                                    <hr />
-                                    <div class="intro">${datum.artist.primary_genres.music_genre_list[0].music_genre.music_genre_name_extended}</div>
-                                </div><!-- /.title-content -->
-                                <div class="card-info">
-                                    Rating:<br><br><span>${datum.artist.artist_rating}</span>
-                                </div><!-- /.card-info -->
-                                <div class="utility-info">
-                                    <ul class="utility-list">
-                                    </ul>
-                                </div><!-- /.utility-info -->
-                                <!-- overlays -->
-                                <div class="gradient-overlay"></div>
-                                <div class="color-overlay"></div>
-                            </div><!-- /.blog-card -->
-                            <div class="col-1"></div>`
-                        )
-                    })
+                    if (data.data !== undefined) {
+                        $('#content-row').text('')
+                        data.data.forEach(datum => {
+                            $('#content-row').append(
+                                `<div class="col-3 blog-card spring-fever">
+                                    <div class="title-content">
+                                        <h3>${datum.artist.artist_name}</h3>
+                                        <hr />
+                                        <div class="intro">${datum.artist.primary_genres.music_genre_list[0].music_genre.music_genre_name_extended}</div>
+                                    </div><!-- /.title-content -->
+                                    <div class="card-info">
+                                        Rating:<br><br><span>${datum.artist.artist_rating}</span>
+                                    </div><!-- /.card-info -->
+                                    <div class="utility-info">
+                                        <ul class="utility-list">
+                                            <li class='ifSignedIn'> <i class="fas fa-heart" onclick='starArtist(${datum.artist.artist_id})'></i></li>
+                                        </ul>
+                                    </div><!-- /.utility-info -->
+                                    <!-- overlays -->
+                                    <div class="gradient-overlay"></div>
+                                    <div class="color-overlay"></div>
+                                </div><!-- /.blog-card -->
+                                <div class="col-1"></div>`
+                            )
+                        })
+                    } else {
+                        listCountryArtists ()
+                    }
                 })
                 .fail(err => {
                     console.log(err)
@@ -501,6 +521,7 @@
                         </div><!-- /.card-info -->
                         <div class="utility-info">
                             <ul class="utility-list">
+                                <li class='ifSignedIn'> <i class="fas fa-heart"></i></li>
                             </ul>
                         </div><!-- /.utility-info -->
                         <!-- overlays -->
@@ -528,6 +549,7 @@
                         </div><!-- /.card-info -->
                         <div class="utility-info">
                             <ul class="utility-list">
+                                <li class='ifSignedIn'> <i class="fas fa-heart"></i></li>
                             </ul>
                         </div><!-- /.utility-info -->
                         <!-- overlays -->
@@ -536,6 +558,32 @@
                     </div><!-- /.blog-card -->
                     <div class="col-1"></div>`
                 )
+            })
+        }
+
+        function starTrack (id) {
+            $.ajax({
+                url: `http://localhost:3000/favorites/toggle/tracks/${id}`,
+                headers: {access_token: localStorage.getItem('token')}
+            })
+            .then(data => {
+                console.log(data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+
+        function starArtist (id) {
+            $.ajax({
+                url: `http://localhost:3000/favorites/toggle/artists/${id}`,
+                headers: {access_token: localStorage.getItem('token')}
+            })
+            .then(data => {
+                console.log(data)
+            })
+            .catch(err => {
+                console.log(err)
             })
         }
     </script>
