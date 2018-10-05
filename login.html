@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content="284099701133-vcv5d8quddobvm7dpkc54jo7618b2kr6.apps.googleusercontent.com">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Register</title>
+</head>
+<style>
+    
+    .g-signin2 {
+        margin-top: 5%;
+    }
+
+
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+        <div class="navbar-brand" >Top Music App</div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <div class="nav-link" onclick="getWorldwidePage()">Worldwide <span class="sr-only">(current)</span></div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link" onclick="getCountryPage()">Country</div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link" onclick="getFavoritePage()">Favorite</div>
+                </li>
+            </ul>
+        </div>
+
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+        <button type="button" class="btn btn-outline-success my-2 my-sm-0" id="login-btn" data-toggle="modal" data-target="#login-modal">
+                Login
+        </button>
+
+        <button type="button" class="btn btn-outline-success my-2 my-sm-0" id="register-btn" data-toggle="modal" data-target="#register-modal">
+                Register
+        </button>
+
+        <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="signOut()" id="signout-btn">
+                Sign Out
+        </button>
+    </nav>
+
+   
+    
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="register-form">
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                placeholder="Enter email" name="email">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                                else.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Name</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input"
+                                name="name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                                name="password">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="register()">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- login Modal -->
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                placeholder="Enter email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                                name="password">
+                        </div>
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="login()">Login</button>
+                    </form>
+                    <div class="g-signin2" data-onsuccess="onSignIn" data-dismiss="modal"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                One of three columns
+                </div>
+
+                <div class="col-sm">
+                
+                        
+                    
+
+
+
+                    
+                </div>
+
+                <div class="col-sm">
+                    
+                One of three columns
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+           
+
+        
+
+
+    
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+
+        $('#signout-btn').hide();
+        
+        //google sign in
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            console.log('masuk');
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log(id_token);
+            $.ajax({
+                method: 'POST',
+                url: `http://localhost:3000/signin/google`,
+                data: {token: id_token}
+            }).done((result) => {
+                
+                localStorage.setItem('token', result.jwttoken);
+                $('#register-btn').hide();
+                $('#login-btn').hide();
+                $('#signout-btn').toggle();
+            }).fail((err) => {
+                console.log(err);
+            });
+
+
+        }
+        
+        //google sign out
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                localStorage.clear()
+                alert('User has been signed out.');
+                $('#register-btn').show();
+                $('#login-btn').show();
+                $('#signout-btn').toggle();
+            });
+        }
+
+        //register
+        function register() {
+
+            $.ajax({
+                method: 'POST',
+                url: 'http://localhost:3000/register',
+                data: {
+                    email: $('#register-form input[name=email]').val(),
+                    name: $('#register-form input[name=name]').val(),
+                    password: $('#register-form input[name=password]').val()
+                }
+            }).done((result) => {
+                localStorage.setItem('token', result.jwttoken);
+                $('#register-btn').hide();
+                $('#login-btn').hide();
+                $('#signout-btn').toggle();
+            }).fail((err) => {
+                alert(err);
+            });
+
+        }
+        
+
+        //login
+        function  login() {
+
+            $.ajax({
+                method: 'POST',
+                url: 'http://localhost:3000/login',
+                data: {
+                    email: $('#login-form input[name=email]').val(),
+                    password: $('#login-form input[name=password]').val()
+                }
+            }).done((result) => {
+                localStorage.setItem('token', result.jwttoken);
+                $('#register-btn').hide();
+                $('#login-btn').hide();
+                $('#signout-btn').toggle();
+            }).fail((err) => {
+                console.log(err);
+            });
+
+        }
+
+        //worldwide page
+        function getWorldwidePage() {
+            alert('worldwidee page');
+        }
+
+        //country page
+        function getCountryPage() {
+            alert('country page');
+        }
+
+        //favorite page
+        function getFavoritePage() {
+            alert('favorite page');
+        }
+
+
+    
+    </script>
+</body>
+</html>
