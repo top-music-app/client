@@ -220,6 +220,9 @@
         function signOut() {
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
+                if (localStorage.getItem('openTab') === 'favorite') {
+                    getWorldwidePage()
+                }
                 localStorage.clear()
                 removeUserInfo()
                 alert('User has been signed out.');
