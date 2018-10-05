@@ -560,14 +560,14 @@
                         <div class="title-content">
                             <h3>${track.track_name}</h3>
                             <hr />
-                            <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
+                            <div class="intro">by ${track.artist_name}</div>
                         </div><!-- /.title-content -->
                         <div class="card-info">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim. 
+                            From album:<br><br>${track.album_name}
                         </div><!-- /.card-info -->
                         <div class="utility-info">
                             <ul class="utility-list">
-                                <li class='ifSignedIn'> <i class="fas fa-heart"></i></li>
+                                <li class='ifSignedIn'> <i class="fas fa-heart" onclick='starTrack(${track.track_id})'></i></li>
                             </ul>
                         </div><!-- /.utility-info -->
                         <!-- overlays -->
@@ -595,7 +595,7 @@
                         </div><!-- /.card-info -->
                         <div class="utility-info">
                             <ul class="utility-list">
-                                <li class='ifSignedIn'> <i class="fas fa-heart"></i></li>
+                                <li class='ifSignedIn'> <i class="fas fa-heart" onclick='starArtist(${artist.artist_id})'></i></li>
                             </ul>
                         </div><!-- /.utility-info -->
                         <!-- overlays -->
