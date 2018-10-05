@@ -131,6 +131,15 @@
         <div id='sidebar-title' class="pb-4 border-bottom">
             Top<br>Music<br>App
         </div>
+        <div id="user-location" style="color:#9CC9E3; font-size: 2vw; margin-left: 50px">
+
+        </div>
+        <div id="user-name" style="color:#9CC9E3; font-size: 2vw; margin-left: 50px">
+
+        </div>
+        <div id="user-gender" style="color:#9CC9E3; font-size: 2vw; margin-left: 50px">
+
+        </div>
         <div id='sidebar-menu'>
             <div class="row mb-4" id='trackmenu' onclick="showTracks()">
                 <div class='col-1'></div>
@@ -196,6 +205,7 @@
                 data: {token: id_token}
             }).done((result) => {
                 localStorage.setItem('token', result.jwttoken);
+                getUserInfo()
                 listFavoriteTracks()
                 listFavoriteArtists()
                 $('.ifSignedIn').show()
@@ -211,6 +221,7 @@
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 localStorage.clear()
+                removeUserInfo()
                 alert('User has been signed out.');
                 $('.ifSignedIn').hide()
                 $('.ifSignedOut').show()
@@ -250,10 +261,45 @@
                 listFavoriteArtists()
                 $('.ifSignedIn').show()
                 $('.ifSignedOut').hide()
+                getUserInfo()
             }).fail((err) => {
                 console.log(err);
             });
         }
+
+        function getUserInfo () {
+            $.ajax({
+                method: 'GET',
+                url: 'http://localhost:3000/userinfo',
+                headers: { access_token: localStorage.getItem('token') }
+            })
+                .done(function(data) {
+                    $('#user-name').text(`${data.name}`);
+                    $('#user-gender').text(`${data.gender}`);
+                })
+                .fail(function(err) {
+                    console.log(err);
+                });
+        }
+
+        function removeUserInfo () {
+            $('#user-name').text('');
+            $('user-gender').text('');
+        }
+
+        function getLocation () {
+            $.ajax({
+                url: 'http://ip-api.com/json'
+            })
+                .done(function(location) {
+                    $('#user-location').append(`${location.country}`);
+                })
+                .fail(function(err) {
+                    console.log(err);
+                });
+        }
+
+        getLocation();
 
         function getWorldwidePage () {
             localStorage.setItem('openTab', 'worldwide')
